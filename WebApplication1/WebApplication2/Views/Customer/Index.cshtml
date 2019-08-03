@@ -1,131 +1,74 @@
-﻿@using WebApplication2.Models
-@model CustomerModel
+﻿@model WebApplication2.Models.CustomerTrainings
+
 @{
     Layout = null;
 }
 
 
 
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Customer</title>
-</head>
-        @Model.SuccessMessage
-        @using (Html.BeginForm("Index", "Customer", FormMethod.Post, new { id = "Customer" }))
-        {
-            @Html.AntiForgeryToken();
-            @Html.ValidationSummary(true);
-            <div class="row" style="padding-top: 50px">
+<div>
+    <h1>Index</h1>
+</div>
+@using (Html.BeginForm("Index", "Customer", FormMethod.Post, new { id = "CustomerForm" }))
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-horizontal">
                 <div class="col-md-6">
-                    <div class="section form-horizontal">
-                        <div class="col-md-6" style="padding-top: 20px">
-                            <div class="row padding-control">
-                                <div class="col-xs-6">
-                                    <dv class="form-group">
-                                        <div class="control-label col-md-4">
-                                            @Html.Label("Customer Name","Customer Nmae")<span style="color:red;font-weight:bold;padding-left:3px">*</span>
-                                        </div>
-                                        <div>
-                                            @Html.TextBoxFor(m => m.Name, new {@id = "txtCustomerName",@tabindex ="1"})
-                                        </div>
-                                    </dv>
-                                    <div class="col-md-6" style="padding-top: 20px">
-                                        <div class="row padding-control">
-                                            <div class="form-group">
-                                                <div class="control-label col-md-4">
-                                                    @Html.Label("Customer Age", "Customer Age")<span style="color:red;font-weight:bold;padding-left:3px">*</span>
-                                                </div>
-                                                <div>
-                                                    @Html.TextBoxFor(m => m.Age, new { @id = "txtCustomerAge",@tabindex="2", @type="number",@maxlength ="2" })
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6" style="padding-top: 20px">
-                            <div class="col-md-6">
-                                <div class="row padding-control">
-                                    <div class="form-group">
-                                        <div class="control-label col-md-4">
-                                            @Html.Label("Date of Birth", "Date of Birth")<span style="color:red;font-weight:bold;padding-left:3px">*</span>
-                                        </div>
-                                        <div>
-                                            @Html.TextBoxFor(m => m.DateofBirth, new { @id = "txtDateofBirth",@tabindex="3" })
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6" style="padding-top: 20px">
-                                <div class="row padding-control">
-                                    <div class="form-group">
-                                        <div class="control-label col-md-4">
-                                            @Html.Label("Customer Occupation", "Customer Occupation")<span style="color:red;font-weight:bold;padding-left:3px">*</span>
-                                        </div>
-                                        <div>
-                                            @Html.DropDownListFor(m => m.Occupation, Model.ListOccupation, new { @id = "drpOccupation" })
-                                            @Html.HiddenFor(m => m.Occupation, new { Occupation = "Occupation",@tabindex = "4" })
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6" style="padding-top: 20px">
-                            <div class="col-md-6">
-                                <div class="row padding-control">
-                                    <div class="form-group">
-                                        <div class="control-label col-md-4">
-                                            @Html.Label("Death Sum Insured", "Death Sum Insured")<span style="color:red;font-weight:bold;padding-left:3px">*</span>
-                                        </div>
-                                        <div>
-                                            @Html.TextBoxFor(m => m.DeathAmount, new { @id = "txtDeathAmt",@tabindex="5" ,@type = "number"})
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="control-label col-md-3">
+                        <span>Training Name:</span>
+                    </div>
+                    <div>
+                        @Html.TextBoxFor(m=>m.TrainingName, new {@class ="form-control" ,@id="TxtTraining",@tabindex = 1})
+                    </div>
+                </div>
+                <div></div>
+                <div class="col-md-6">
+                    <div class="control-label col-md-3">
+                        <span>Start Date:</span>
+                    </div>
+                    <div>
+                        @Html.TextBoxFor(m => m.StartDate,"{0:dd/MM/yy}", new { @class = "form-control datepicker", @id = "TxtStartDate", @tabindex = 2 })
+                    </div>
+                </div>
+                <div></div>
+                <div class="col-md-6">
+                    <div class="control-label col-md-3">
+                        <span>End Date:</span>
+                    </div>
+                    <div>
+                        @Html.TextBoxFor(m => m.EndDate, "{0:dd/MM/yy}", new { @class = "form-control datepicker", @id = "TxtEndDate", @tabindex = 3 })
+                    </div>
+                </div>
+                <div></div>
+                <div class="col-md-6">
+                    <div class="control-label col-md-3">
+                        <span>No of Days:</span> 
+                    </div>
+                    <div>
+                        @Html.TextBoxFor(m => m.DateTimeDifference, new { @class = "form-control", @id = "TxtTimeDifference", @tabindex = 4 })
                     </div>
                 </div>
             </div>
-            <div class="form-group col-md-12 col-xs-12 row" style="padding-top: 10px">
-                <div class="col-md-4 btn-group" >
-                    <input type="submit" name="submit" id="submit" value="submit" claas="btn width-20 btn-info pull-right" style="margin:0px 2px 0px 5px" tabindex="6" />
-                </div>
-            </div>
-       }
-<script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.7.js"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/jquery-ui.js"></script>
-<script language="javascript" type="text/javascript">
-
-
-    $("#submit").click(function (e) {
-        if($("#txtCustomerName").val() == "")
+        </div>
+        <div class="form-group col-md-12 col-xs-12 button-row">
+            <input type="submit" name="submit" id="Save" value="Save" class="btn width-20 btn-info pull-left" style="margin:0px 5px 5px 15px" />
+        </div>
+    </div>
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js">
+        $("#Save").click(function(e)
         {
-            alert("Please Enter Customer Name");
-            return false;
-        }
-        if ($("#txtCustomerAge").val() == "" && $("#txtCustomerAge").val() == 0) {
-            alert("Please Enter Customer Age");
-            return false;
-        }
-
-        if ($("#txtDateofBirth").val() == "") {
-            alert("Please Enter Customer DateofBirth");
+        if (($("#TxtStartDate").val() == 0) || ($("#TxtStartDate").val() == ''))
+            {
+            alert("Start Date can not be empty.");
             return false;
         }
 
-        if ($("#drpOccupation")[0].selectedIndex == 0) {
-            alert("Please Enter Customer Occupation");
+        if (($("#TxtEndDate").val() == 0) || ($("#TxtEndDate").val() == '')) {
+            alert("End Date can not be empty.");
             return false;
         }
 
-        if ($("#txtDeathAmt").val() == "" && $("#txtDeathAmt").val()== 0) {
-            alert("Please Enter Death Sum Insured.");
-            return false;
-        }
-        return true;
-
-});
-
-</script>
+    });
+    </script>
+}

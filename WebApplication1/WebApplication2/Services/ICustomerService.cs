@@ -8,6 +8,5 @@ namespace WebApplication2.Services
 {
     public interface  ICustomerService
     {
-        double CalculationForDeathPremium(CustomerModel model);
     }
 }

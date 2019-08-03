@@ -15,47 +15,31 @@ namespace WebApplication2.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var model = new CustomerModel();
-            var customerModel = LoadDropDown(model);
-            return View(customerModel);
+            CustomerTrainings model = new CustomerTrainings();
+            return View(model);
         }
 
-        private CustomerModel LoadDropDown(CustomerModel model)
-        {
-            ModelState.Clear();
-            model.ListOccupation = GetListofOccupationDropDown();
-            return model;
-        }
-
+       
         [HttpPost]
-        public ActionResult Index(CustomerModel model, string btnValue)
+        public ActionResult Index(CustomerTrainings model, string btnValue)
         {
             _customerService = new CustomerService();
             if (model != null)
             {
-                model.DeathPremium = _customerService.CalculationForDeathPremium(model);
-                if (model.DeathPremium != 0)
+                if (model.StartDate != null && model.EndDate != null)
+                    model.DateTimeDifference = Convert.ToInt32((model.EndDate - model.StartDate).Value.TotalDays);
+                else
+                    model.DateTimeDifference = 0;
+                if (model.StartDate > model.EndDate)
+                    model.ErrorMessage = _customerService.Message(false, model.DateTimeDifference, model.StartDate.Value, model.EndDate.Value);
+                if (model.ErrorMessage == "")
                 {
-                    model.SuccessMessage = string.Format("{0} Yearly Premium Amount is {1}", model.Name, model.DeathPremium);
-                    model.ListOccupation = GetListofOccupationDropDown();
-                    model.Occupation = GetListofOccupationDropDown().Where(x => x.Value == model.Occupation).ToString();
+                    var isValid = _customerService.InsertCustomerTraining(model);
+                    model.SuccessMessage = _customerService.Message(isValid, model.DateTimeDifference, model.StartDate.Value, model.EndDate.Value);
                 }
             } 
             return View(model);
         }
 
-        private IEnumerable<SelectListItem> GetListofOccupationDropDown()
-        {
-            List<SelectListItem> listOccupation = new List<SelectListItem>();
-            listOccupation.Add(new SelectListItem { Text = "--Seclect Occupation", Value = "" });
-            listOccupation.Add(new SelectListItem { Text = OccupationText.Cleaner, Value = OccupationValue.Cleaner });
-            listOccupation.Add(new SelectListItem { Text = OccupationText.Doctor, Value = OccupationValue.Doctor });
-            listOccupation.Add(new SelectListItem { Text = OccupationText.Author, Value = OccupationValue.Author });
-            listOccupation.Add(new SelectListItem { Text = OccupationText.Farmer, Value = OccupationValue.Farmer });
-            listOccupation.Add(new SelectListItem { Text = OccupationText.Mechanic, Value = OccupationValue.Mechanic });
-            listOccupation.Add(new SelectListItem { Text = OccupationText.Florist, Value = OccupationValue.Florist });
-
-            return listOccupation;
-        }
     }
 }

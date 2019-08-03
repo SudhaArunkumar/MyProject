@@ -50,3 +50,11 @@ c:\users\arunkumar\documents\visual studio 2015\Projects\WebApplication1\WebAppl
 c:\users\arunkumar\documents\visual studio 2015\Projects\WebApplication1\WebApplication2\bin\Newtonsoft.Json.xml
 c:\users\arunkumar\documents\visual studio 2015\Projects\WebApplication1\WebApplication2\obj\Debug\WebApplication2.dll
 c:\users\arunkumar\documents\visual studio 2015\Projects\WebApplication1\WebApplication2\obj\Debug\WebApplication2.pdb
+C:\Users\Arunkumar\documents\visual studio 2015\Projects\WebApplication1\WebApplication2\bin\EntityFramework.dll
+C:\Users\Arunkumar\documents\visual studio 2015\Projects\WebApplication1\WebApplication2\bin\EntityFramework.SqlServer.dll
+C:\Users\Arunkumar\documents\visual studio 2015\Projects\WebApplication1\WebApplication2\bin\EntityFramework.xml
+C:\Users\Arunkumar\documents\visual studio 2015\Projects\WebApplication1\WebApplication2\bin\EntityFramework.SqlServer.xml
+C:\Users\Arunkumar\documents\visual studio 2015\Projects\WebApplication1\WebApplication2\bin\nunit.framework.dll
+C:\Users\Arunkumar\documents\visual studio 2015\Projects\WebApplication1\WebApplication2\bin\nunit.framework.pdb
+C:\Users\Arunkumar\documents\visual studio 2015\Projects\WebApplication1\WebApplication2\bin\nunit.framework.xml
+C:\Users\Arunkumar\documents\visual studio 2015\Projects\WebApplication1\WebApplication2\obj\Debug\WebApplication2.csprojResolveAssemblyReference.cache

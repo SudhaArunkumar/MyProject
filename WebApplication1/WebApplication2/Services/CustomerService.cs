@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using WebApplication2.Models;
@@ -8,53 +9,43 @@ namespace WebApplication2.Services
 {
     public class CustomerService
     {
-        public double CalculationForDeathPremium(CustomerModel model)
+        private string MessageText; 
+        public bool InsertCustomerTraining(CustomerTrainings model)
         {
-            double premium = 0;
-            if(model != null)
-            {
-                if( !string.IsNullOrEmpty(model.Name) && (model.Age != 0) 
-                    && !string.IsNullOrEmpty(model.DateofBirth) && !string.IsNullOrEmpty(model.Occupation) && (model.DeathAmount != 0))
+            bool isValid = false;
+            try
+            { 
+                if (model != null)
                 {
-                    var ratingFactor = GetOccupationRatingFactor(model.Occupation);
-                    premium = ((Convert.ToDouble(model.DeathAmount) * ratingFactor * Convert.ToDouble(model.Age)) / 1000 * 12);
+                    SqlConnection conn = new SqlConnection("@Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Arunkumar\\documents\\visual studio 2015\\Projects\\WebApplication1\\WebApplication2\\App_Data\\DatabaseLocal.mdf;Integrated Security=True");
+                    SqlCommand cmd = new SqlCommand("Insert into CustomerTraining (TrainingName,StartDate,EndDate,DateDifference) values('" + model.TrainingName + "','" + model.StartDate + "','" + model.EndDate + "','" + model.DateTimeDifference + "')", conn);
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                    isValid= true;
                 }
             }
-            return premium;
-        }
-
-        private static class OccupationRatingFactor
-        {
-            public const double professional = 1.0;
-            public const double WhiteCollar = 1.25;
-            public const double LightManual = 1.50;
-            public const double HeavyManual = 1.75;
-        }
-
-        public double GetOccupationRatingFactor(string ocuupationValue)
-        {
-            double value  = 0;
-            switch(ocuupationValue)
+            catch(Exception ex)
             {
-                case OccupationValue.Author:
-                    value = 1.25;
-                    break;
-
-                case OccupationValue.Cleaner:
-                    value = 1.50;
-                    break;
-
-
-                case OccupationValue.Doctor:
-                    value = 1.0;
-                    break;
-
-
-                case OccupationValue.Farmer:
-                    value = 1.75;
-                    break;
+                isValid = false;
+                throw ex;
             }
-            return value;
+            return isValid;
+        }       
+
+        public string Message(bool Isvalid,int Days,DateTime startDate,DateTime endDate)
+        {
+            if(startDate > endDate)
+            {
+                MessageText = "StartDate should not be greater than EndDate.";
+            }
+               
+            if (Isvalid)
+                MessageText = string.Format("Successfully Inserted Date Difference {0}", Days);
+            else
+                MessageText = "UnSuccessfull Insert Data";
+
+            return MessageText;
         }
     }
 }
